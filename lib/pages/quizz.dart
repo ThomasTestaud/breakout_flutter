@@ -3,9 +3,8 @@ import 'package:quizz_app/data/question.dart';
 import 'package:quizz_app/pages/score.dart';
 import 'package:quizz_app/pages/quizzWidgets/questionCard.dart';
 import 'package:quizz_app/pages/quizzWidgets/explanationCard.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
+import 'package:quizz_app/pages/quizzWidgets/startGameCard.dart';
 
 class Brick {
   double x;
@@ -34,12 +33,7 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
   double right = 20;
   double left = 20;
 
-  newBall() {
-    x = 100;
-    y = 250;
-    dx = 2;
-    dy = 2;
-  }
+
 
   List<Brick> bricks = [
     new Brick(100, 100),
@@ -60,8 +54,14 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
 
   int score = 0;
   int currentQuestion = 0;
-  bool displayExplanation = false;
   bool rightAnswer = false;
+
+    newBall() {
+    x = 100;
+    y = 250;
+    dx = 2 + currentQuestion / 3;
+    dy = 2 + currentQuestion / 3;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,6 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
         setState(() {
           brickGame = true;
           newBall();
-          displayExplanation = false;
           currentQuestion++;
         });
       }
@@ -89,7 +88,11 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
 
     void checkAnswer(bool userAnswer) {
       setState(() {
-        displayExplanation = true;
+        showExplanationCard(
+            context,
+            userAnswer == questions.questionList[currentQuestion].response,
+            questions.questionList[currentQuestion].explanation,
+            nextQuestion);
         if (userAnswer == questions.questionList[currentQuestion].response) {
           score++;
           rightAnswer = true;
@@ -153,42 +156,46 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
     }
 
     loopFunction();
+    //showStartGameCard(context, loopFunction);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text("Les questions"),
       ),
       drawerEdgeDragWidth: screenWidth,
-      ///////////////////////////////////////////START OF BRICKGAME HERE
       body: !brickGame
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  !displayExplanation
-                      ? QuestionCard(
-                          index: currentQuestion + 1,
-                          question:
-                              questions.questionList[currentQuestion].question,
-                          response:
-                              questions.questionList[currentQuestion].response,
-                          checkAnswer: checkAnswer,
-                          img: questions.questionList[currentQuestion].imagePath
-                          )
-                      : const SimpleDialog(),
-                  displayExplanation
-                      ? explanationCard(
-                          rightAnswer,
-                          questions.questionList[currentQuestion].explanation,
-                          nextQuestion)
-                      : const SimpleDialog(),
+                  QuestionCard(
+                      index: currentQuestion + 1,
+                      question:
+                          questions.questionList[currentQuestion].question,
+                      response:
+                          questions.questionList[currentQuestion].response,
+                      checkAnswer: checkAnswer,
+                      img: questions.questionList[currentQuestion].imagePath),
                 ],
               ),
             )
-          : Container(
+          : ///////////////////////////////////////////START OF BRICKGAME HERE
+          Container(
               width: double.infinity,
               child: Stack(
                 children: [
+                  const Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(padding: EdgeInsets.only(top: 20),
+                    child: Text(
+                      "Cassez une brique pour déclancher une question !",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),),
+                  ),
                   for (Brick brick in bricks)
                     Positioned(
                       left: brick.x,
@@ -200,6 +207,14 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
                           color: const Color.fromARGB(255, 243, 145, 33),
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -212,6 +227,14 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
                       decoration: BoxDecoration(
                         color: Colors.blue,
                         shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -225,6 +248,14 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
                         color: Color.fromARGB(255, 255, 0, 0),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -252,16 +283,18 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
                       child: Text('>>'),
                     ),
                   ),
-                  y > screenHeight ? Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          newBall();
-                        });
-                      },
-                      child: Text('Nouvelle balle'),
-                    ),
-                  ) : Container(),
+                  y > screenHeight
+                      ? Center(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                newBall();
+                              });
+                            },
+                            child: Text('Nouvelle balle'),
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
             ),

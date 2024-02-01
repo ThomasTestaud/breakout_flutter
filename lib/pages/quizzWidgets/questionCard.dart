@@ -17,26 +17,59 @@ class QuestionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("Question ${index.toString()}"),
-      content: Column( children: [
-        Image(image: AssetImage('img/$img')),
-        Text(question),
-      ]),
-      actions: [
-        TextButton(
-          onPressed: () {
-            checkAnswer(false);
-          },
-          child: const Text("Faux"),
+    return Column(children: [
+      Text("Question ${index.toString()}",
+          style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center),
+      const SizedBox(height: 20),
+      ClipRRect(
+            borderRadius: BorderRadius.circular(20), // Image border
+            child: SizedBox.fromSize(
+              size: const Size.fromRadius(150), // Image radius
+              child: Image.network('img/$img', fit: BoxFit.cover),
+            ),
+          ),
+      const SizedBox(height: 20),
+      Padding(
+        padding: const EdgeInsets.only(
+          left: 15,
+          right: 15,
         ),
-        TextButton(
-          onPressed: () {
-            checkAnswer(true);
-          },
-          child: const Text("Vrais"),
-        ),
-      ],
-    );
+        child: Text(question,
+            style: const TextStyle(
+              fontSize: 20,
+            ),
+            textAlign: TextAlign.center),
+      ),
+      const SizedBox(height: 40),
+      Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              checkAnswer(false);
+            },
+            child: const Text("Faux"),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              textStyle: const TextStyle(fontSize: 20, color: Colors.white),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              checkAnswer(true);
+            },
+            child: const Text("Vrais"),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+              textStyle: const TextStyle(fontSize: 20),
+            ),
+          ),
+        ],
+      )
+    ]);
   }
 }

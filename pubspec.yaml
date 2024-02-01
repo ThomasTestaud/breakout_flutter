@@ -67,6 +67,12 @@ flutter:
       - img/d.png
       - img/e.png
       - img/f.png
+      - img/oui.gif
+      - img/non.gif
+      - img/breakout.gif
+      - img/bad.gif
+      - img/good.gif
+      - img/great.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

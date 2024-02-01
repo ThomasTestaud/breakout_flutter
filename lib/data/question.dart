@@ -30,7 +30,7 @@ class QuestionData {
         explanation: "Le jeu original, appellé Breakout, a été créé en 1976 par Atari, inpiré par le je Pong",
         imagePath: 'b.png'),
     Question(
-        question: "Le je a fait un flop à sa sortie ?",
+        question: "Le jeu a fait un flop à sa sortie ?",
         response: false,
         explanation:
             "Le jeu a eu un succès immédiat, et a été vendu à plus de 15 millions d'exemplaires",
