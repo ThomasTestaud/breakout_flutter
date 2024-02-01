@@ -114,10 +114,10 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
         if (x >= screenWidth - 20 || x <= 0) {
           dx = -dx;
         }
-        if (((y >= screenHeight - 20 - 150 &&
-                y <= screenHeight - 20 - 150 + 20) &&
+        if (((y >= screenHeight - 20 - 200 &&
+                y <= screenHeight - 20 - 200 + 20) &&
             (x > sliderValue && x < sliderValue + 100))) {
-          y = screenHeight - 20 - 150;
+          y = screenHeight - 20 - 200;
           dy = -dy;
           dx = (x - sliderValue - 50) / 20;
         }
@@ -240,7 +240,7 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
                   ),
                   Positioned(
                     left: sliderValue,
-                    top: screenHeight - 150,
+                    top: screenHeight - 200,
                     child: Container(
                       width: 100,
                       height: 20,

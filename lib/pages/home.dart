@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
             borderRadius: BorderRadius.circular(20), // Image border
             child: SizedBox.fromSize(
               size: const Size.fromRadius(150), // Image radius
-              child: Image.network('img/breakout.gif', fit: BoxFit.cover),
+              child: Image.asset('img/breakout.gif', fit: BoxFit.cover),
             ),
           ),
           const SizedBox(height: 20),

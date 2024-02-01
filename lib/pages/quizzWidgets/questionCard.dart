@@ -26,7 +26,7 @@ class QuestionCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20), // Image border
             child: SizedBox.fromSize(
               size: const Size.fromRadius(150), // Image radius
-              child: Image.network('img/$img', fit: BoxFit.cover),
+              child: Image.asset('img/$img', fit: BoxFit.cover),
             ),
           ),
       const SizedBox(height: 20),

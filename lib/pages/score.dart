@@ -19,19 +19,21 @@ class _ResultPageState extends State<ResultPage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Fin de la partie !", style: TextStyle(fontSize: 25)),
+            const Text("Fin de la partie !", style: TextStyle(fontSize: 25, color: Color.fromARGB(255, 199, 91, 28))),
             Text("Vous avez obtenu ${widget.score} points !",
-                style: const TextStyle(fontSize: 30)),
+                style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
             Text(widget.score > 4 ? "Vous êtes un expert !" : widget.score > 3 ? 'Vous avez obtenu la mention "Ça va"' : 'Vous êtes nul...', style: TextStyle(fontSize: 20)),
             const SizedBox(height: 20),
             ClipRRect(
             borderRadius: BorderRadius.circular(20), // Image border
             child: SizedBox.fromSize(
               size: const Size.fromRadius(150), // Image radius
-              child: Image.network(widget.score > 4 ? 'img/great.gif' : widget.score > 3 ? 'img/good.gif' : 'img/bad.gif', fit: BoxFit.cover),
+              child: Image.asset(widget.score > 4 ? 'img/great.gif' : widget.score > 3 ? 'img/good.gif' : 'img/bad.gif', fit: BoxFit.cover),
             ),
           ),
             const SizedBox(height: 20),
@@ -41,7 +43,7 @@ class _ResultPageState extends State<ResultPage> {
                 },
                 child: const Text("Rejouer"))
           ],
-        ),
+        ),),
       ),
     );
   }
