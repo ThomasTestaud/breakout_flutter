@@ -59,8 +59,8 @@ class _MyQuizzPageState extends State<MyQuizzPage> {
     newBall() {
     x = 100;
     y = 250;
-    dx = 2 + currentQuestion / 3;
-    dy = 2 + currentQuestion / 3;
+    dx = 2 + currentQuestion / 2;
+    dy = 2 + currentQuestion / 2;
   }
 
   @override

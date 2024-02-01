@@ -15,7 +15,7 @@ void showExplanationCard(BuildContext context, bool rightAnswer, explanation, ne
             : const Text("Raté !", textAlign: TextAlign.center),
         elevation: 12,
         children: [
-          Image.asset('img/${rightAnswer ? "oui.gif" : "non.gif"}'),
+          Image.asset('img/${rightAnswer ? "oui.gif" : "non.gif"}', fit: BoxFit.cover),
           Padding(
             padding: const EdgeInsets.only(left: 15, right: 15,),
             child: Text(explanation, textAlign: TextAlign.center, style: const TextStyle(fontSize: 20)),
